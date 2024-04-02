@@ -1,6 +1,7 @@
 import React from 'react'
 
-const Weather = () => {
+
+const Weather = ({weatherData}) => {
   return (
     <div className='card bg-light my-3 p-3'>
         <div className='row'>
@@ -9,10 +10,10 @@ const Weather = () => {
                 style={{height:'180px'}}/>
             </div>
             <div className='col-8'>
-                <h3>Weather</h3>
-                <p>Temperature</p>
-                <p>Humidity - Pressure</p>
-                <p>Sunset time - Sunrise time</p>
+                <h3>{weatherData.weather[0].main} - {weatherData.weather[0].description}</h3>
+                <p>{Math.round(weatherData.main.temp -273.15)} &deg;C</p>
+                <p>{weatherData.main.humidity}% - {weatherData.main.pressure} hPa</p>
+                <p>{new Date(weatherData.sys.sunrise).toLocaleTimeString()} - {new Date(weatherData.sys.sunset).toLocaleTimeString()}</p>
             </div>
         </div>
     </div>

@@ -13,6 +13,8 @@ function App() {
   // THe weather state will be in this component
 
 const [weather,setWeather] = useState(null);
+const [error, setError] = useState('');
+
 const apiUrl = "https://api.openweathermap.org/data/2.5/weather";
 const apiId = "9fd7a449d055dba26a982a3220f32aa2";
 
@@ -25,9 +27,13 @@ const handleSearch = async (cityName) => {
     // Handling the data
     const response = await axios.get(`${apiUrl}?q=${cityName}&appid=${apiId}`);
     console.log(response.data);
+    setWeather(response.data);
+    setError('');
   }
   catch (error){
     console.log(error);
+    setError(`Something is wrong ${error}`);
+    setWeather(null)
   }
 
 }
@@ -36,7 +42,7 @@ const handleSearch = async (cityName) => {
   return (
     <div className='container'>
      <Search onSearchPressed={handleSearch}/>
-     <Weather/>
+     { weather ? <Weather weatherData={weather}/> : <div><p>No weather at the moment</p></div>}
     </div>
   )
 }
